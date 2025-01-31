@@ -1,6 +1,6 @@
 
 /*
- * *** PLACE YOUR NAME / SECTION  HERE ***
+ * *** ENRIQUE PRADO GUTIERREZ / SECTION  HERE ***
  *
  * Homework # 1 (Programming Assignment). This Java class defines some basic
  * manipulation operations on Linked-Lists and Stacks.
@@ -86,8 +86,23 @@ public class HW1 {
          * found in the linked-list that is less than thr parameter value passed.
          */
         public void removeElementsLT ( int ltValue ) {
+            /*
+            *Run through the whole linked list to check all of the nodes
+            *For each node of the linked list check if it is a lesser value than the ltValue
+            *If it is less than the ltValue then use the removeElements to remove the element
+            */
 
             // YOUR CODE GOES HERE
+            Node currentNode = head;
+
+            while (currentNode != null){
+                if (currentNode.data < ltValue){
+                    removeElement(currentNode.data);
+
+                }
+                currentNode = currentNode.next;
+            } 
+
 
             return;
         }
@@ -101,6 +116,28 @@ public class HW1 {
         public void removeElement ( int value ) {
 
             // YOUR CODE GOES HERE
+            /*
+             * go through the linked list
+             * once value equals the int value then set the pointer to the next one 
+             * check to make sure that the next one is not the int value 
+             */
+
+            while (head != null && head.data == value) {
+                head = head.next;
+            }
+
+
+            Node currentNode = head;
+            
+            while(currentNode != null && currentNode.next != null){
+                if(currentNode.next.data == value){
+                    currentNode.next = currentNode.next.next;
+                }
+                else{
+                    currentNode = currentNode.next;
+                }
+                
+            }
 
             return;
         }
@@ -160,8 +197,23 @@ public class HW1 {
             Stack<Character> stack = new Stack<>();
             input = input.toLowerCase().replaceAll("\\s+", "");
 
+            /*
+             * add half of the input to the stack
+             * then compare the half that is in the stack to the other half as it pops the stack
+             */
             // Your CODE GOES HERE
-            return false;
+            int length = input.length();
+
+            for(int i = 0; i < length/2; i++){  //Adds the first half of a input
+                stack.push(input.charAt(i));
+            }
+
+            for (int j = (length+1) / 2; j < length ;j++){ //length + 1 in case the length is odd then the middle letter does not matter
+                if (input.charAt(j) != stack.pop()) {
+                    return false;
+                }
+            }
+            return true;
         }
 
 
@@ -182,8 +234,34 @@ public class HW1 {
          */
         public static int findLargestK(Stack<Integer> stack, int k) {
 
+
+            /*
+             * go through stack and pop variables but add them to the tempstack
+             * if the current value is equal to k and is more than k then that values index is the index reached
+             * 
+             */
             // YOUR CODE GOES HERE
-            return -1;
+            Stack<Integer> tempStack= new Stack<>();
+            int maxIndex = -1;
+            int index = stack.size() - 1;
+            
+
+            while (!stack.isEmpty()) {
+                int value = stack.pop(); //removes value from original stack
+                
+
+                if (value == k && index > maxIndex) { //current value must be the same as k and the largest index is less than the current index then it is changed to current index 
+                    maxIndex = index;
+                }
+                tempStack.push(value);//puts value in temporary stack
+                index--;
+            }
+
+            while (!tempStack.isEmpty()) { //restore the original stack
+                stack.push(tempStack.pop());
+            }
+            
+            return maxIndex;
         }
 
     }  // End class Stacks
@@ -219,7 +297,7 @@ public class HW1 {
         */
 
         // RETURN THE CORRECT OPTION NUMBER LISTED ABOVE
-        return -1;
+        return 3;
     }
 
 
@@ -240,7 +318,7 @@ public class HW1 {
          */
 
         // RETURN THE CORRECT OPTION LISTED ABOVE
-        return -1;
+        return 2;
     }
 
 }
